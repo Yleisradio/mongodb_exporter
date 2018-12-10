@@ -15,7 +15,6 @@ env:
     - VERSION_NUMBER=$(./ci/version.sh)
     - DOCKER_TAG_NAME=mongodb_exporter
     - STATIC_DIR=.s3-static
-    - TEST_MONGODB_URI=NULL
 
 services:
   - docker
