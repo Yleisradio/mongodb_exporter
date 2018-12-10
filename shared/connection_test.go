@@ -18,7 +18,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-//	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRedactMongoUri(t *testing.T) {
@@ -33,7 +33,7 @@ func TestRedactMongoUri(t *testing.T) {
 func TestMongoSession(t *testing.T) {
 	mso := &MongoSessionOpts{}
 	session := MongoSession(mso)
-//	require.NotNil(t, session)
+	require.NotNil(t, session)
 	if session == nil {
 		t.Error("session is nil")
 	}
@@ -49,5 +49,5 @@ func TestMongoSession(t *testing.T) {
 func TestTestConnection(t *testing.T) {
 	mso := MongoSessionOpts{}
 	_, err := TestConnection(mso)
-//	require.NoError(t, err)
+	require.NoError(t, err)
 }
