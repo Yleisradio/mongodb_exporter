@@ -18,10 +18,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/percona/exporter_shared/helpers"
-	"github.com/stretchr/testify/assert"
+//	"github.com/percona/exporter_shared/helpers"
+//	"github.com/stretchr/testify/assert"
 
-	"github.com/prometheus/client_golang/prometheus"
+//	"github.com/prometheus/client_golang/prometheus"
 )
 
 func testMongoDBURL() string {
@@ -32,46 +32,46 @@ func testMongoDBURL() string {
 }
 
 func TestCollector(t *testing.T) {
-        t.skipNow()
-//	if testing.Short() {
-//		t.Skip("-short is passed, skipping functional test")
-//	}
-//
-//	collector := NewMongodbCollector(&MongodbCollectorOpts{
-//		URI: testMongoDBURL(),
-//		CollectDatabaseMetrics:   true,
-//		CollectCollectionMetrics: true,
-//		CollectTopMetrics:        true,
-//		CollectIndexUsageStats:   true,
-//	})
-//
-//	descCh := make(chan *prometheus.Desc)
-//	go func() {
-//		collector.Describe(descCh)
-//		close(descCh)
-//	}()
-//	metricCh := make(chan prometheus.Metric)
-//	go func() {
-//		collector.Collect(metricCh)
-//		close(metricCh)
-//	}()
-//
-//	var descs int
-//	for range descCh {
-//		descs++
-//	}
-//
-//	var metrics int
-//	var versionInfoFound bool
-//	for m := range metricCh {
-//		m := helpers.ReadMetric(m)
-//		switch m.Name {
-//		case "mongodb_mongod_version_info":
-//			versionInfoFound = true
-//		}
-//		metrics++
-//	}
-//
-//	assert.Equalf(t, descs, metrics, "got %d descs and %d metrics", descs, metrics)
-//	assert.True(t, versionInfoFound, "version info metric not found")
+//        t.skipNow()
+	if testing.Short() {
+		t.Skip("-short is passed, skipping functional test")
+	}
+
+	collector := NewMongodbCollector(&MongodbCollectorOpts{
+		URI: testMongoDBURL(),
+		CollectDatabaseMetrics:   true,
+		CollectCollectionMetrics: true,
+		CollectTopMetrics:        true,
+		CollectIndexUsageStats:   true,
+	})
+
+	descCh := make(chan *prometheus.Desc)
+	go func() {
+		collector.Describe(descCh)
+		close(descCh)
+	}()
+	metricCh := make(chan prometheus.Metric)
+	go func() {
+		collector.Collect(metricCh)
+		close(metricCh)
+	}()
+
+	var descs int
+	for range descCh {
+		descs++
+	}
+
+	var metrics int
+	var versionInfoFound bool
+	for m := range metricCh {
+		m := helpers.ReadMetric(m)
+		switch m.Name {
+		case "mongodb_mongod_version_info":
+			versionInfoFound = true
+		}
+		metrics++
+	}
+
+	assert.Equalf(t, descs, metrics, "got %d descs and %d metrics", descs, metrics)
+	assert.True(t, versionInfoFound, "version info metric not found")
 }
