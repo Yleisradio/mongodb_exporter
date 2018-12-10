@@ -12,7 +12,7 @@ matrix:
 env:
   global:
     - SERVICE_NAME=mongodb_exporter
-    - VERSION_NUMBER=$(./scripts/ci/version.sh)
+    - VERSION_NUMBER=$(./ci/version.sh)
     - DOCKER_TAG_NAME=mongodb_exporter
     - STATIC_DIR=.s3-static
 
