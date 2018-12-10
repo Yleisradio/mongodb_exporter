@@ -14,19 +14,26 @@ env:
     - SERVICE_NAME=mongodb_exporter
     - VERSION_NUMBER=$(./ci/version.sh)
     - DOCKER_TAG_NAME=mongodb_exporter
-    - STATIC_DIR=.s3-static
 
 services:
   - docker
 
 script:
-  # ensure that vendor/ is in sync with code and Gopkg.*
-#  - curl https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd64 -L -o ${TRAVIS_HOME}/dep && chmod +x ${TRAVIS_HOME}/dep
-#  - rm -fr vendor/
-#  - ~/dep ensure -v
-#  - git diff --exit-code
-
-   - make 
-#  - docker run --rm -v "$PWD":/go/src/github.com/percona/mongodb_exporter -w /go/src/github.com/percona/mongodb_exporter golang make build
-   
+   - make docker 
+ 
+deploy:
+  - provider: script
+    script: ./ci/push_image.sh
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^(master|test)$ && $TRAVIS_PULL_REQUEST = "false"
+  - provider: s3
+    region: eu-west-1
+    bucket: yle-mongodb-exporter
+    upload-dir: $SERVICE_NAME/s3/$VERSION_NUMBER
+    skip_cleanup: true
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^(master|test)$ && $TRAVIS_PULL_REQUEST = "false"
+ 
 
