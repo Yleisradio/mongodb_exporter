@@ -19,7 +19,7 @@ services:
   - docker
 
 script:
-   - make docker 
+   - make 
  
 deploy:
   - provider: script
