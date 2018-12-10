@@ -18,10 +18,10 @@ import (
 	"os"
 	"testing"
 
-//	"github.com/percona/exporter_shared/helpers"
-//	"github.com/stretchr/testify/assert"
+	"github.com/percona/exporter_shared/helpers"
+	"github.com/stretchr/testify/assert"
 
-//	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 func testMongoDBURL() string {
@@ -32,7 +32,6 @@ func testMongoDBURL() string {
 }
 
 func TestCollector(t *testing.T) {
-//        t.skipNow()
 	if testing.Short() {
 		t.Skip("-short is passed, skipping functional test")
 	}
