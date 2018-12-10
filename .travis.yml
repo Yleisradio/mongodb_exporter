@@ -20,7 +20,8 @@ services:
 
 script:
    - make 
- 
+   - ./ci/build-image.sh 
+
 deploy:
   - provider: script
     script: ./ci/push_image.sh
