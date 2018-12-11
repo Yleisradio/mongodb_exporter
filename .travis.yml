@@ -20,18 +20,19 @@ services:
 
 script:
    - make 
-   - ./ci/build-image.sh 
+#   - ./ci/build-image.sh 
 
 deploy:
-  - provider: script
-    script: ./ci/push_image.sh
-    on:
-      all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^(master|test)$ && $TRAVIS_PULL_REQUEST = "false"
+#  - provider: script
+#    script: ./ci/push_image.sh
+#    on:
+#      all_branches: true
+#      condition: $TRAVIS_BRANCH =~ ^(master|test)$ && $TRAVIS_PULL_REQUEST = "false"
   - provider: s3
     region: eu-west-1
     bucket: yle-mongodb-exporter
-    upload-dir: $SERVICE_NAME/s3/$VERSION_NUMBER
+    file: mongodb_exporter
+    upload-dir: $SERVICE_NAME/s3
     skip_cleanup: true
     on:
       all_branches: true
