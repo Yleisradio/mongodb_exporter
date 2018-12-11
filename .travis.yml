@@ -32,7 +32,8 @@ deploy:
     region: eu-west-1
     bucket: yle-mongodb-exporter
     file_glob: true
-    file: "mongodb_exporter"
+    file: 
+        - mongodb_exporter
     upload-dir: $SERVICE_NAME/s3
     skip_cleanup: true
     on:
